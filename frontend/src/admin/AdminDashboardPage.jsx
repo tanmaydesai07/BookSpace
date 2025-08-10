@@ -23,18 +23,14 @@ export default function AdminDashboardPage() {
     const fetchDashboardData = async () => {
       try {
         const [statsRes, bookingsRes, placesRes] = await Promise.all([
-          fetch('/api/stats'),
-          fetch('/api/bookings/recent'),
-          fetch('/api/places'),
+          axios.get('/stats'),
+          axios.get('/bookings/recent'),
+          axios.get('/places'),
         ]);
 
-        const statsData = await statsRes.json();
-        const bookingsData = await bookingsRes.json();
-        const placesData = await placesRes.json();
-
-        setStats(statsData);
-        setRecentBookings(bookingsData);
-        setAvailablePlaces(placesData);
+        setStats(statsRes.data);
+        setRecentBookings(bookingsRes.data);
+        setAvailablePlaces(placesRes.data);
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
       }
