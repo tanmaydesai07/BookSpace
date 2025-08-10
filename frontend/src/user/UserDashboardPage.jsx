@@ -14,8 +14,8 @@ export default function UserDashboardPage({ user }) {
   const fetchUserData = async () => {
     try {
       const [bookingsRes, placesRes] = await Promise.all([
-        axios.get('https://book-space-deployment.onrender.com/api/bookings/approved'),
-        axios.get('https://book-space-deployment.onrender.com/api/places'),
+        axios.get('/bookings/approved'),
+        axios.get('/places'),
       ]);
 
       setTodaysEvents(bookingsRes.data);

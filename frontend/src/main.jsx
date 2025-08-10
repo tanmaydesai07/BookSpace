@@ -7,7 +7,7 @@ import App from './App.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 
 // Axios default setup
-axios.defaults.baseURL = 'https://book-space-deployment.onrender.com/api'; // Adjust if your backend is on a different port
+axios.defaults.baseURL = 'https://bookspace-production.up.railway.app/api'; // Adjust if your backend is on a different port
 axios.defaults.withCredentials = true;
 
 createRoot(document.getElementById('root')).render(
