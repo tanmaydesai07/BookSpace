@@ -12,18 +12,14 @@ export default function UserDashboardPage({ user }) {
   const [availableVenues, setAvailableVenues] = useState([]);
 
   const fetchUserData = async () => {
-    const token = localStorage.getItem('token');
     try {
       const [bookingsRes, placesRes] = await Promise.all([
-        fetch('/api/bookings/approved'),
-        fetch('/api/places'),
+        axios.get('https://book-space-deployment.onrender.com/api/bookings/approved'),
+        axios.get('https://book-space-deployment.onrender.com/api/places'),
       ]);
 
-      const bookingsData = await bookingsRes.json();
-      const placesData = await placesRes.json();
-
-      setTodaysEvents(bookingsData);
-      setAvailableVenues(placesData.filter(place => place.status === 'available'));
+      setTodaysEvents(bookingsRes.data);
+      setAvailableVenues(placesRes.data.filter(place => place.status === 'available'));
     } catch (error) {
       console.error("Error fetching user dashboard data:", error);
     }
