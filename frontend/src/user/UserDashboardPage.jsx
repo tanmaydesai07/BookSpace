@@ -31,7 +31,7 @@ export default function UserDashboardPage({ user }) {
 
   const handleBookingSubmit = async (bookingDetails) => {
     try {
-      await axios.post('https://book-space-deployment.onrender.com/api/bookings', bookingDetails);
+      await axios.post('/bookings', bookingDetails);
 
       // Refresh data after successful booking
       fetchUserData();
