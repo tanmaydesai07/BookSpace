@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 // Import shared components
 import { PageHeader, RecentBookings } from '../components/shared';
