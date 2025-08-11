@@ -4,6 +4,16 @@ import { useTheme } from '../../context/ThemeContext';
 
 const PageHeader = ({ title, children, sidebarOpen, setSidebarOpen }) => {
   const { darkMode, toggleDarkMode } = useTheme();
+  const userName = localStorage.getItem('userName') || ' ';
+
+  const handleToggle = () => {
+    toggleDarkMode();
+    if (!darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
 
   return (
     <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
@@ -31,7 +41,7 @@ const PageHeader = ({ title, children, sidebarOpen, setSidebarOpen }) => {
             />
           </div>
 
-          <button onClick={toggleDarkMode} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+          <button onClick={handleToggle} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
             {darkMode ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} className="text-slate-600" />}
           </button>
           
@@ -41,7 +51,7 @@ const PageHeader = ({ title, children, sidebarOpen, setSidebarOpen }) => {
           </button>
 
           <div className="w-9 h-9 bg-blue-600 rounded-full flex items-center justify-center cursor-pointer">
-            <span className="text-white font-semibold text-sm">A</span>
+            <span className="text-white font-semibold text-sm">{userName.charAt(0).toUpperCase()}</span>
           </div>
         </div>
       </div>

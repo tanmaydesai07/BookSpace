@@ -21,9 +21,11 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const res = await axios.post('/auth/login', formData);
-      localStorage.setItem('role', res.data.user.role);
-      console.log('Login successful. User role:', res.data.user.role);
-      if (res.data.user.role === 'admin') {
+      const { user } = res.data;
+      localStorage.setItem('role', user.role);
+      localStorage.setItem('userName', user.name);
+      console.log('Login successful. User role:', user.role);
+      if (user.role === 'admin') {
         console.log('Navigating to /admin');
         navigate('/admin');
       } else {
