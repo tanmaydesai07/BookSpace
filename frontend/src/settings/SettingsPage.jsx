@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PageHeader } from '../components/shared';
-
+import FormSkeleton from '../components/ui/FormSkeleton';
 export default function SettingsPage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
