@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { PageHeader } from '../components/shared';
 import BookingModal from '../components/shared/BookingModal';
 import ConfirmationModal from '../components/shared/ConfirmationModal';

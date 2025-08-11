@@ -49,17 +49,6 @@ export default function BookingRequestsPage() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <PageHeader title="Booking Requests" />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 dark:bg-gray-900 p-6">
-          <div className="text-center text-gray-500 dark:text-gray-400">Loading pending requests...</div>
-        </main>
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -76,8 +65,11 @@ export default function BookingRequestsPage() {
       <PageHeader title="Booking Requests" />
       <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 dark:bg-gray-900 p-6">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Pending Booking Requests</h2>
-        {
-          pendingBookings.length === 0 ? (
+        {loading ? (
+          <div className="space-y-4">
+            <CardGridSkeleton count={3} />
+          </div>
+        ) : pendingBookings.length === 0 ? (
             <p className="text-gray-600 dark:text-gray-400">No pending booking requests.</p>
           ) : (
             <div className="space-y-4">
