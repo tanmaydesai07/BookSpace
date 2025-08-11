@@ -14,10 +14,18 @@ import PrivateRoute from './components/shared/PrivateRoute.jsx';
 import Layout from './components/shared/Layout.jsx';
 
 function App() {
+  const role = localStorage.getItem('role');
+
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
+
+      {/* Redirect root path based on auth status */}
+      <Route 
+        path="/"
+        element={role ? <Navigate to={role === 'admin' ? '/admin' : '/dashboard'} /> : <Navigate to="/login" />}
+      />
 
       {/* Routes with Layout */}
       <Route element={<Layout />}>
@@ -38,7 +46,8 @@ function App() {
         </Route>
       </Route>
 
-      <Route path="*" element={<Navigate to="/dashboard" />} />
+      {/* Wildcard route redirects to root for logic handling */}
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }

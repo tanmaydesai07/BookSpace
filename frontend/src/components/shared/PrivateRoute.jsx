@@ -4,13 +4,18 @@ import { Navigate, Outlet } from 'react-router-dom';
 const PrivateRoute = ({ adminOnly }) => {
   const role = localStorage.getItem('role');
 
-  // Assuming if we reach here, the httpOnly cookie has been set and is valid
-  // A more robust solution would involve a backend call to verify session/token
+  // 1. Check if user is logged in at all. If not, redirect to login.
+  if (!role) {
+    return <Navigate to="/login" />;
+  }
 
+  // 2. Check if the route is for admins and if the user has the correct role.
   if (adminOnly && role !== 'admin') {
+    // If a non-admin tries to access an admin route, send them to their own dashboard.
     return <Navigate to="/dashboard" />;
   }
 
+  // 3. If all checks pass, render the requested component.
   return <Outlet />;
 };
 
