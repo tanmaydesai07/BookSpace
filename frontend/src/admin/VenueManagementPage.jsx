@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { PageHeader } from '../components/shared';
 import { Plus, Edit, Trash2, Eye } from 'lucide-react';
 import VenueModal from '../components/admin/VenueModal';
@@ -20,12 +21,8 @@ export default function VenueManagementPage() {
   const fetchVenues = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/places');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setVenues(data);
+      const res = await axios.get('/places');
+      setVenues(res.data);
     } catch (err) {
       setError(err.message);
       console.error("Error fetching venues:", err);
