@@ -4,6 +4,7 @@ import { PageHeader } from '../components/shared';
 import { Plus, Edit, Trash2, Eye } from 'lucide-react';
 import VenueModal from '../components/admin/VenueModal';
 import ConfirmationModal from '../components/shared/ConfirmationModal';
+import TableSkeleton from '../components/ui/TableSkeleton';
 
 export default function VenueManagementPage() {
   const [venues, setVenues] = useState([]);
