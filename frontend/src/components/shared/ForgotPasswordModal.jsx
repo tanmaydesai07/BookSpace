@@ -119,18 +119,11 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
     setLoading(true);
     setMessage('');
     try {
-      const res = await fetch('/api/auth/reset-password', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, otp, newPassword }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setMessage({ text: data.msg, type: 'success' });
-        setTimeout(resetStateAndClose, 2000);
-      } else {
-        setMessage({ text: data.msg, type: 'error' });
-      }
-    } catch (_) {
-      setMessage({ text: 'Server error.', type: 'error' });
+      const res = await axios.post('/auth/reset-password', { email, otp, newPassword });
+      setMessage({ text: res.data.msg, type: 'success' });
+      setTimeout(resetStateAndClose, 2000);
+    } catch (err) {
+      setMessage({ text: err.response?.data?.msg || 'Server error.', type: 'error' });
     } finally {
         setLoading(false);
     }

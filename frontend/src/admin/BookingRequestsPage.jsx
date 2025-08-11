@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { PageHeader } from '../components/shared';
 import { Check, X, Loader2 } from 'lucide-react';
 
@@ -19,12 +20,8 @@ export default function BookingRequestsPage() {
   const fetchPendingBookings = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/bookings/pending');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setPendingBookings(data);
+      const res = await axios.get('/bookings/pending');
+      setPendingBookings(res.data);
     } catch (err) {
       setError(err.message);
       console.error("Error fetching pending bookings:", err);

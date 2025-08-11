@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 // Import components from their organized barrel files
 import { RecentBookings, PageHeader } from '../components/shared';

@@ -36,19 +36,9 @@ export default function VenueManagementPage() {
 
   const handleSave = async (venueData) => {
     try {
-      const method = venueData._id ? 'PUT' : 'POST';
-      const url = venueData._id ? `/api/places/${venueData._id}` : '/api/places';
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(venueData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      const method = venueData._id ? 'put' : 'post';
+      const url = venueData._id ? `/places/${venueData._id}` : '/places';
+      await axios[method](url, venueData);
 
       fetchVenues(); // Refresh the list
       setIsModalOpen(false);

@@ -24,19 +24,10 @@ const SignupPage = ({ onSignupSuccess }) => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/auth/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setOtpSent(true);
-      } else {
-        setError(data.msg);
-      }
+      await axios.post('/auth/send-otp', { email });
+      setOtpSent(true);
     } catch (err) {
-      setError('Server error. Please try again later.');
+      setError(err.response?.data?.msg || 'Server error. Please try again later.');
     }
     setLoading(false);
   };
@@ -54,7 +45,7 @@ const SignupPage = ({ onSignupSuccess }) => {
       } else {
         navigate('/dashboard');
       }
-      onSignupSuccess();
+      // onSignupSuccess(); // This function is not passed as a prop
     } catch (err) {
       setError(err.response?.data?.msg || 'Server error. Please try again later.');
     }

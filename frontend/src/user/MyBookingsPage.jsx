@@ -80,22 +80,16 @@ const MyBookingsPage = () => {
   const handleDeleteBooking = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`/api/bookings/${currentBooking._id}`, {
-        method: 'DELETE',
+      await axios.delete(`/bookings/${currentBooking._id}`, {
         headers: {
           'x-auth-token': token,
         },
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.msg || 'Failed to delete booking');
-      }
-
       setIsDeleteModalOpen(false);
       fetchBookingsAndPlaces(); // Refresh the list
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.msg || err.message);
     }
   };
 
