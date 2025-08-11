@@ -77,20 +77,13 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
     setLoading(true);
     setMessage('');
     try {
-      const res = await fetch('/api/auth/forgot-password', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        if (!isResend) setStep(2);
-        setMessage({ text: data.msg, type: 'success' });
-        setTimer(60);
-        setIsResendDisabled(true);
-      } else {
-        setMessage({ text: data.msg, type: 'error' });
-      }
-    } catch (_) {
-      setMessage({ text: 'Server error. Please try again later.', type: 'error' });
+      const res = await axios.post('/auth/forgot-password', { email });
+      if (!isResend) setStep(2);
+      setMessage({ text: res.data.msg, type: 'success' });
+      setTimer(60);
+      setIsResendDisabled(true);
+    } catch (err) {
+      setMessage({ text: err.response?.data?.msg || 'Server error. Please try again later.', type: 'error' });
     } finally {
       setLoading(false);
     }

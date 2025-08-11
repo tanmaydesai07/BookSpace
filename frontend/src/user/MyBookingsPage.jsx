@@ -15,30 +15,15 @@ const MyBookingsPage = () => {
   const [availablePlaces, setAvailablePlaces] = useState([]);
 
   const fetchBookingsAndPlaces = async () => {
-    const token = localStorage.getItem('token');
     setLoading(true);
     try {
       const [bookingsRes, placesRes] = await Promise.all([
-        fetch('/api/bookings/my-bookings', {
-          headers: {
-            'x-auth-token': token,
-          },
-        }),
-        fetch('/api/places'), // Fetch all places to populate the dropdown
+        axios.get('/bookings/my-bookings'),
+        axios.get('/places'), // Fetch all places to populate the dropdown
       ]);
 
-      if (!bookingsRes.ok) {
-        throw new Error('Failed to fetch bookings');
-      }
-      if (!placesRes.ok) {
-        throw new Error('Failed to fetch places');
-      }
-
-      const bookingsData = await bookingsRes.json();
-      const placesData = await placesRes.json();
-
-      setBookings(bookingsData);
-      setAvailablePlaces(placesData.filter(place => place.status === 'available'));
+      setBookings(bookingsRes.data);
+      setAvailablePlaces(placesRes.data.filter(place => place.status === 'available'));
     } catch (err) {
       setError(err.message);
     } finally {
@@ -99,12 +84,12 @@ const MyBookingsPage = () => {
       <div className="flex-1 flex flex-col overflow-hidden">
         <PageHeader title="My Bookings" />
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 dark:bg-gray-900 p-6">
-          {loading && <p className="text-center text-gray-500 dark:text-gray-400">Loading...</p>}
           {error && <p className="text-center text-red-500">{error}</p>}
-          {!loading && !error && bookings.length === 0 && (
+          {loading ? (
+            <CardGridSkeleton count={3} />
+          ) : bookings.length === 0 ? (
             <p className="text-center text-gray-500 dark:text-gray-400">No bookings found.</p>
-          )}
-          {!loading && !error && bookings.length > 0 && (
+          ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {bookings.map(booking => (
                 <div key={booking._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
