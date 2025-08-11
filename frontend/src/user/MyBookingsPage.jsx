@@ -4,7 +4,7 @@ import axios from 'axios';
 import { PageHeader } from '../components/shared';
 import BookingModal from '../components/shared/BookingModal';
 import ConfirmationModal from '../components/shared/ConfirmationModal';
-
+import CardGridSkeleton from '../components/ui/CardGridSkeleton';
 const MyBookingsPage = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
